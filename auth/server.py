@@ -45,7 +45,7 @@ def create_jwt(username, secret, authz):
 
 # print(config.get("jwt_secret"))
 
-@server.route("/login", method=["POST"])
+@server.route("/login", methods=["POST"])
 def login():
     auth = request.authorization
     if not auth:
@@ -69,7 +69,7 @@ def login():
         return "invalid creds", 401
 
 
-@server.route("/validate", method=["post"])
+@server.route("/validate", methods=["post"])
 def validate():
     """
     validates the token
@@ -89,6 +89,14 @@ def validate():
     except:
         return "not authorized", 403
     return decoded, 200
+
+@server.route("/health", methods=["GET", "POST"])
+def helth():
+    """
+    lets u know if the server is up
+    they all ask "is the server up but no one asks how is the server Q.Q
+    """
+    return "Healthy i AM ~!", 200
      
 if __name__ == "__main__":
     server.run(host="0.0.0.0", port=7878)
